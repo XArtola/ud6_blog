@@ -4,23 +4,28 @@
 <!-- Page Content -->
 <div class="container">
   <div class="row">
+
+    @foreach($posts as $post)
     <!-- Post Content Column -->
     <div class="col-lg-8">
       <!-- Title -->
-      <h1 class="mt-4">Post title</h1>
+      <h1 class="mt-4">{{$post->title}}</h1>
       <!-- Author -->
       <p class="lead">
         by
-        <a href="#">Post user</a>
+        <a href="#">{{$post->user}}</a>
       </p>
       <hr>
       <!-- Date/Time -->
-      <p>Posted on January 1, 2019 at 12:00 PM</p>
+      <p>{{$post->published_at}}</p>
       <hr>
+      @isset($post->image)
       <!-- Preview Image -->
-      <img class="img-fluid rounded" src="http://placehold.it/900x300" alt="">
+      <img class="img-fluid rounded" src="{{asset('$post->image')}}" alt="">
+      @endisset
       <hr>
-      <!-- Post Content -->
+      <p>{{$post->body}}</p>
+      <!-- Post Content 
       <p class="lead">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ducimus, vero, obcaecati, aut, error quam sapiente nemo saepe quibusdam sit excepturi nam quia corporis eligendi eos magni recusandae laborum minus inventore?</p>
       <p>normal ipsum dolor sit amet, consectetur adipisicing elit. Ut, tenetur natus doloremque laborum quos iste ipsum rerum obcaecati impedit odit illo dolorum ab tempora nihil dicta earum fugiat. Temporibus, voluptatibus.</p>
       <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eos, doloribus, dolorem iusto blanditiis unde eius illum consequuntur neque dicta incidunt ullam ea hic porro optio ratione repellat perspiciatis. Enim, iure!</p>
@@ -33,6 +38,9 @@
       <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Error, nostrum, aliquid, animi, ut quas placeat totam sunt tempora commodi nihil ullam alias modi dicta saepe minima ab quo voluptatem obcaecati?</p>
       <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Harum, dolor quis. Sunt, ut, explicabo, aliquam tenetur ratione tempore quidem voluptates cupiditate voluptas illo saepe quaerat numquam recusandae? Qui, necessitatibus, est!</p>
       <hr>
+-->
+      @endforeach
+
     </div>
     <!-- Sidebar Widgets Column -->
     <div class="col-md-4">
@@ -44,28 +52,12 @@
           <div class="row">
             <div class="col-lg-6">
               <ul class="list-unstyled mb-0">
+                @foreach($categories as $category)
                 <li>
-                  <a href="#">Web Design</a>
+                  <a href="#">{{$category->name}}</a>
                 </li>
-                <li>
-                  <a href="#">HTML</a>
-                </li>
-                <li>
-                  <a href="#">Freebies</a>
-                </li>
-              </ul>
-            </div>
-            <div class="col-lg-6">
-              <ul class="list-unstyled mb-0">
-                <li>
-                  <a href="#">JavaScript</a>
-                </li>
-                <li>
-                  <a href="#">CSS</a>
-                </li>
-                <li>
-                  <a href="#">Tutorials</a>
-                </li>
+                @endforeach
+
               </ul>
             </div>
           </div>
@@ -77,4 +69,4 @@
   <!-- /.row -->
 </div>
 <!-- /.container -->
-@endsection('content')
+@endsection
