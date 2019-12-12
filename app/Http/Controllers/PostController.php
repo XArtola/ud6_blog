@@ -24,7 +24,7 @@ class PostController extends Controller
     public function index()
     {
         $user = Auth::user();
-        $posts = POST::where('user_id', $user->id);
+        $posts = POST::where('user_id', $user->id)->get();
 
         return view('posts.index', compact('posts'));
     }
@@ -35,8 +35,9 @@ class PostController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create()
-    {
-        return view('posts.create');
+    {        
+        $post = new Post();
+        return view('posts.create',compact('post'));
     }
 
     /**
@@ -59,7 +60,7 @@ class PostController extends Controller
     public function show($id)
     {
         $post = POST::find($id);
-        return view('post.show');
+        return view('posts.show',compact('post'));
     }
 
     /**
@@ -70,7 +71,9 @@ class PostController extends Controller
      */
     public function edit($id)
     {
-        return view('posts.edit');
+        $post = Post::find(1);
+        $categories =
+        return view('posts.edit',compact('post'));
     }
 
     /**

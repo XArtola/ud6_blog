@@ -15,8 +15,7 @@
 
   <!-- Custom styles for this template -->
   <link href="css/blog-post.css" rel="stylesheet">
-  <link href="{{url('font-awesome/css/font-awesome.min.css')}}" rel="stylesheet">
- 
+  <link href="{{asset('font-awesome/css/font-awesome.min.css')}}" rel="stylesheet">
 
 </head>
 
@@ -53,6 +52,9 @@
             </a>
 
             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+              <a class="dropdown-item" href="{{ route('posts.index') }}">
+                {{ __('Posts') }}
+              </a>
               <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
                 {{ __('Logout') }}

@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-
-@include('posts._form')
+<form action="{{route('posts.store')}}" method="post">
+    @include('posts._form')
+</form>
 @endsection

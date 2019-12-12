@@ -5,8 +5,6 @@
   <!-- Page Content -->
   <div class="container">
   <a href= "{{route('posts.create')}}"><button type="button" class="btn btn-secondary">New Post</button></a><br><br>
-  
-
   <table class="table table-condensed">
     <thead>
       <tr>
