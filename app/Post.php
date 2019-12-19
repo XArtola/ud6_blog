@@ -9,3 +9,4 @@ class Post extends Model
     //para poder mostrar
     protected $date = ['published_at'];
 }
+

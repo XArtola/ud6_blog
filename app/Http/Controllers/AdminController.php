@@ -3,19 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Post;
-use Auth;
-use Illuminate\Support\Facades\Auth as FacadesAuth;
 
-class PostController extends Controller
+class AdminController extends Controller
 {
-    //Para pedir login
-    /*
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
-*/
     /**
      * Display a listing of the resource.
      *
@@ -23,10 +13,7 @@ class PostController extends Controller
      */
     public function index()
     {
-        $user = Auth::user();
-        $posts = POST::where('user_id', $user->id)->get();
-
-        return view('posts.index', compact('posts'));
+        //
     }
 
     /**
@@ -35,9 +22,8 @@ class PostController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create()
-    {        
-        $post = new Post();
-        return view('posts.create',compact('post'));
+    {
+        //
     }
 
     /**
@@ -59,8 +45,7 @@ class PostController extends Controller
      */
     public function show($id)
     {
-        $post = POST::find($id);
-        return view('posts.show',compact('post'));
+        //
     }
 
     /**
@@ -71,9 +56,7 @@ class PostController extends Controller
      */
     public function edit($id)
     {
-        $post = Post::find(1);
-       // $categories =
-        return view('posts.edit',compact('post'));
+        //
     }
 
     /**

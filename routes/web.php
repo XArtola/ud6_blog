@@ -34,3 +34,7 @@ Route::delete('/posts/{id}', 'PostController@destroy')->name('posts.destroy');
 
 //Todo en una linea
 //Route::resource('posts', 'PostController');
+
+Route::get('/admin','AdminController@index')->name('admin')->middleware('admin');
+
+Route::get('/editor','EditorController@index')->name('editor')->middleware('editor');
