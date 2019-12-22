@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Post;
+use App\Category;
 use Auth;
 use Illuminate\Support\Facades\Auth as FacadesAuth;
 
@@ -35,9 +36,11 @@ class PostController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create()
-    {        
+    {
         $post = new Post();
-        return view('posts.create',compact('post'));
+        $categories = Category::All();
+        $btnText = "Crear";
+        return view('posts.create', compact('post', 'categories', 'btnText'));
     }
 
     /**
@@ -48,7 +51,20 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $post = new Post();
+        $post->title = $request->title;
+        $post->excerpt = $request->excerpt;
+        $post->body = $request->body;
+        $post->category_id = $request->category;
+        $post->image = null;
+
+        //$post->image = $request->file;
+        $post->user_id = Auth::user()->id;
+        $post->save();
+
+        return redirect()->route('posts.index');
+        //return redirect()->route('proyectos.show', ['id' => $request->id]);
+
     }
 
     /**
@@ -60,7 +76,7 @@ class PostController extends Controller
     public function show($id)
     {
         $post = POST::find($id);
-        return view('posts.show',compact('post'));
+        return view('posts.show', compact('post'));
     }
 
     /**
@@ -71,9 +87,10 @@ class PostController extends Controller
      */
     public function edit($id)
     {
-        $post = Post::find(1);
-       // $categories =
-        return view('posts.edit',compact('post'));
+        $post = Post::find($id);
+        $categories = Category::All();
+        $btnText = "Actualizar";
+        return view('posts.edit', compact('id','post', 'categories', 'btnText'));
     }
 
     /**
@@ -85,7 +102,18 @@ class PostController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $post = Post::find($id);
+        $post->title = $request->title;
+        $post->excerpt = $request->excerpt;
+        $post->body = $request->body;
+        $post->category_id = $request->category;
+        $post->image = null;
+        $post->user_id = 3;
+        //$post->image = $request->file;
+        //$post->user_id = auth()->user()->Id;
+        $post->update();
+
+        return redirect()->route('posts.index');
     }
 
     /**
@@ -96,6 +124,7 @@ class PostController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Post::find($id)->delete();
+        return back();
     }
 }

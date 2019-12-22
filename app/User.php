@@ -44,6 +44,12 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    public function post()
+    {
+        return $this->hasMany('App\Post');
+    }
+
+
     public function sendEmailVerificationNotification()
     {
         $this->notify(new VerifyEmail);
