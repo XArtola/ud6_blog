@@ -1,6 +1,6 @@
 {{ csrf_field() }}
 
-<div class="form-group" >
+<div class="form-group">
     <label>Title</label>
     <input type="text" name="title" class="form-control {{ $errors->has('title') ? 'is-invalid' : ''}}" placeholder="Enter title" value="{{old('title',$post->title)}}">
     {!! $errors->first('title','<span class="invalid-feedback ">:message</span>') !!}
@@ -20,7 +20,7 @@
     <select name="category" class="form-control {{ $errors->has('category') ? 'is-invalid' : ''}}">
         <option value="">Select a category</option>
         @foreach ($categories as $category)
-            <option value="{{$category->id}}" {{ old('category',$post->category_id) == $category->id ? 'selected' : ''}}>{{$category->name}}</option>
+        <option value="{{$category->id}}" {{ old('category',$post->category_id) == $category->id ? 'selected' : ''}}>{{$category->name}}</option>
         @endforeach
     </select>
     {!! $errors->first('category','<span class="invalid-feedback ">:message</span>') !!}

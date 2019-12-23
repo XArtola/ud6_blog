@@ -2,9 +2,15 @@
 
 namespace App;
 
+use Egulias\EmailValidator\Validation\EmailValidation;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use App\Notifications\VerifyEmailNotification;
+use Illuminate\Auth\Notifications\VerifyEmail;
+
+//Añadir implements EmailValidation
+//class User extends Authenticatable implements EmailValidation
 
 class User extends Authenticatable
 {
@@ -26,6 +32,7 @@ class User extends Authenticatable
      */
     protected $hidden = [
         'password', 'remember_token',
+
     ];
 
     /**
@@ -37,4 +44,24 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    public function post()
+    {
+        return $this->hasMany('App\Post');
+    }
+
+
+    public function sendEmailVerificationNotification()
+    {
+        $this->notify(new VerifyEmail);
+    }
+
+    public function isAdmin()
+    {
+        return ($this->role == 'admin');
+    }
+
+    public function getRole(){
+
+        return ($this->role);
+    }
 }

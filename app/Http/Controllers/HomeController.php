@@ -11,9 +11,10 @@ class HomeController extends Controller
      *
      * @return void
      */
+    //Añadir verified para que a parte de autenticar veirifique
     public function __construct()
     {
-        $this->middleware('auth');
+        $this->middleware(['auth','verified']);
     }
 
     /**
