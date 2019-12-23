@@ -3,17 +3,30 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\User;
 
 class AdminController extends Controller
 {
+    public function main()
+    {
+        return view('admin.main');
+    }
+
+    public function roles()
+    {
+        $users = User::All();
+        return view('admin.index', compact('users'));
+    }
+
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
-        //
+    {/*
+        $users = User::All();
+        return view('admin.index', compact('users'));*/
     }
 
     /**
