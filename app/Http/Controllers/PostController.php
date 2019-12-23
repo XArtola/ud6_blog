@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Post;
 use App\Category;
 use Auth;
+use Storage;
 use Illuminate\Support\Facades\Auth as FacadesAuth;
 
 class PostController extends Controller
@@ -57,8 +58,12 @@ class PostController extends Controller
         $post->body = $request->body;
         $post->category_id = $request->category;
         $post->image = null;
-
-        //$post->image = $request->file;
+        if (isset($request->img)) {
+            $file = $request->file('img');
+            $filename = uniqid() . '.' . $file->getClientOriginalExtension();
+            $path = Storage::disk('public')->put($filename, file_get_contents($file));
+            $post->image = 'img/posts/' . $filename;
+        }
         $post->user_id = Auth::user()->id;
         $post->save();
 
@@ -90,7 +95,7 @@ class PostController extends Controller
         $post = Post::find($id);
         $categories = Category::All();
         $btnText = "Actualizar";
-        return view('posts.edit', compact('id','post', 'categories', 'btnText'));
+        return view('posts.edit', compact('id', 'post', 'categories', 'btnText'));
     }
 
     /**
@@ -108,11 +113,16 @@ class PostController extends Controller
         $post->body = $request->body;
         $post->category_id = $request->category;
         $post->image = null;
-        $post->user_id = 3;
-        //$post->image = $request->file;
-        //$post->user_id = auth()->user()->Id;
-        $post->update();
+        if (isset($request->img)) {
+            $file = $request->file('img');
+            $filename = uniqid() . '.' . $file->getClientOriginalExtension();
+            $path = Storage::disk('public')->put($filename, file_get_contents($file));
+            $post->image = 'img/posts/' . $filename;
+        };
 
+        $post->user_id = Auth::user()->id;
+        $post->update();
+        
         return redirect()->route('posts.index');
     }
 
