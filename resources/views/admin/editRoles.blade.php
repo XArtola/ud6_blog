@@ -19,7 +19,7 @@
                 <input type="hidden" name="userId" value="{{$user->id}}">
                 <button type="submit" id="add" style="background: none;padding: 0px;border: none;color:red" @if($user->roles->where('pivot.role_id',$role->id)->count())
             disabled @endif>
-                    <i class="fa fa-check" style="color:black"></i>
+                    <i class="fa fa-check" style="color:{{$user->roles->where('pivot.role_id',$role->id)->count() ? 'black' : 'white'}}"></i>
                 </button>
             </form>
         </td>
