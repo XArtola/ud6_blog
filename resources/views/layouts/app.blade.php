@@ -38,11 +38,11 @@
           <!-- Authentication Links -->
           @guest
           <li class="nav-item">
-            <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
+            <a class="nav-link" href="{{ route('login') }}">{{ __('Iniciar sesión') }}</a>
           </li>
           @if (Route::has('register'))
           <li class="nav-item">
-            <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
+            <a class="nav-link" href="{{ route('register') }}">{{ __('Registrarse') }}</a>
           </li>
           @endif
           @else
@@ -52,12 +52,20 @@
             </a>
 
             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+              @editor
               <a class="dropdown-item" href="{{ route('posts.index') }}">
                 {{ __('Posts') }}
               </a>
+              @endeditor
+
+              @admin
+              <a class="dropdown-item" href="{{ route('admin.main') }}">
+                {{ __('Panel administrador') }}
+              </a>
+              @endadmin
               <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
-                {{ __('Logout') }}
+                {{ __('Salir') }}
               </a>
 
               <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
@@ -84,8 +92,9 @@
   </footer>
 
   <!-- Bootstrap core JavaScript -->
-  <script src="js/jquery.min.js"></script>
-  <script src="js/bootstrap.bundle.min.js"></script>
+  <script src="{{asset('js/jquery.min.js')}}"></script>
+  <script src="{{asset('js/bootstrap.bundle.min.js')}}"></script>
+
 
 </body>
 

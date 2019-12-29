@@ -8,6 +8,12 @@ use App\Role;
 
 class AdminController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware(['auth', 'role:admin']);
+    }
+
     public function main()
     {
         return view('admin.main');
@@ -40,6 +46,7 @@ class AdminController extends Controller
     {
 
         User::find($id)->delete();
+        return back();
     }
     //MAL
     public function updateRoles(Request $request, $id)

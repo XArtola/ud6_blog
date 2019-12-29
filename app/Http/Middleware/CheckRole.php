@@ -3,7 +3,7 @@
 namespace App\Http\Middleware;
 
 use Closure;
-
+use App\User;
 class CheckRole
 {
     /**
@@ -15,8 +15,15 @@ class CheckRole
      */
     public function handle($request, Closure $next, $role)
     {
+        /*
         if(auth()->user()->getRole()==$role)
         return $next($request);
+        else
+            return redirect('/');
+            */
+            $user = User::find(auth()->user()->id);
+        if ($user->roles()->where('name',$role)->count())
+            return $next($request);
         else
             return redirect('/');
     }

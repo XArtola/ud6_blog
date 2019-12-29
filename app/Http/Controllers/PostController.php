@@ -15,7 +15,7 @@ class PostController extends Controller
 
     public function __construct()
     {
-        $this->middleware('auth');
+        $this->middleware(['auth','role:editor']);
     }
 
     /**
@@ -94,7 +94,7 @@ class PostController extends Controller
         if ($user->can('view', $post)) {
             return view('posts.show', compact('post'));          
         } else {
-            return back();
+            return view('errors.403');
         }
         // return view('posts.show', compact('post'));
     }

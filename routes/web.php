@@ -52,8 +52,5 @@ Route::delete('/admin/user/{id}','AdminController@destroyUser')->name('admin.use
 Route::post('/admin/{id}/roles','AdminController@updateRoles')->name('admin.updateRoles');
 
 
-
-
-
 Route::get('/editor','EditorController@index')->name('editor')->middleware('editor');
 
