@@ -16,16 +16,17 @@
         by
         <a href="#">{{$post->user->name}}</a>
       </p>
-      <hr>
+      <hr class="bg-dark">
       <!-- Date/Time -->
       <p>{{$post->published_at}}</p>
-      <hr>
+      <hr class="bg-dark">
       @isset($post->image)
       <!-- Preview Image -->
       <img class="img-fluid rounded" src="{{asset($post->image)}}" alt="">
       @endisset
       <hr>
-      <p>{{$post->body}}</p>
+      <p class="text-justify">{{$post->body}}</p>
+      <p class="btn border border-dark">{{$post->category->name}}</p>
     
     @endforeach
 </div>
