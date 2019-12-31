@@ -3,10 +3,16 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Post;
-use App\Category;
-class BlogController extends Controller
+
+class EditorController extends Controller
 {
+
+
+    public function __construct(){
+
+    $this->middleware('role:editor');
+
+    }
     /**
      * Display a listing of the resource.
      *
@@ -14,11 +20,7 @@ class BlogController extends Controller
      */
     public function index()
     {
-       //Devolverá los posts en orden  
-       $posts = Post::latest('published_at')->get();
-       $categories = Category::All();
-       return view('welcome',compact('posts','categories'));
-
+        //
     }
 
     /**
