@@ -9,21 +9,20 @@
     <div class="col-lg-8">
       <!-- Title -->
       <h1 class="mt-4">{{$post->title}}</h1>
-      <!-- Author -->
-      <p class="lead">
-        by
-        <a href="#">{{$post->user->name}}</a>
-      </p>
-      <hr>
+      <h1 class="lead">{{$post->excerpt}}</h1>
+
+      <hr class="bg-dark">
       <!-- Date/Time -->
       <p>{{$post->published_at}}</p>
-      <hr>
+      <hr class="bg-dark">
       @isset($post->image)
       <!-- Preview Image -->
       <img class="img-fluid rounded" src="{{asset($post->image)}}" alt="">
       @endisset
       <hr>
-      <p>{{$post->body}}</p>
+      <p class="text-justify">{{$post->body}}</p>
+      <p class="btn border border-dark">{{$post->category->name}}</p>
+
       <!-- Post Content 
       <p class="lead">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ducimus, vero, obcaecati, aut, error quam sapiente nemo saepe quibusdam sit excepturi nam quia corporis eligendi eos magni recusandae laborum minus inventore?</p>
       <p>normal ipsum dolor sit amet, consectetur adipisicing elit. Ut, tenetur natus doloremque laborum quos iste ipsum rerum obcaecati impedit odit illo dolorum ab tempora nihil dicta earum fugiat. Temporibus, voluptatibus.</p>

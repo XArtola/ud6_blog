@@ -14,6 +14,7 @@ class BlogController extends Controller
      */
     public function index()
     {
+       //Devolverá los posts en orden  
        $posts = Post::latest('published_at')->get();
        $categories = Category::All();
        return view('welcome',compact('posts','categories'));

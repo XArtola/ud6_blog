@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Providers;
+
 use App\Post;
 use App\Policies\PostPolicy;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
@@ -14,9 +15,10 @@ class AuthServiceProvider extends ServiceProvider
      * @var array
      */
     protected $policies = [
+        //'App\Post' => 'App\Policies\PostPolicy',
+        //'App\Model' => 'App\Policies\ModelPolicy',
         Post::class => PostPolicy::class,
-
-        // 'App\Model' => 'App\Policies\ModelPolicy',
+        //'App\Post' => 'App\Policies\PostPolicy',  
     ];
 
     /**
@@ -27,7 +29,5 @@ class AuthServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->registerPolicies();
-
-        //
     }
 }

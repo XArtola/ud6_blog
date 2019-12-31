@@ -4,9 +4,16 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\User;
+use App\Role;
 
 class AdminController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware(['auth', 'role:admin']);
+    }
+
     public function main()
     {
         return view('admin.main');
@@ -15,7 +22,47 @@ class AdminController extends Controller
     public function roles()
     {
         $users = User::All();
-        return view('admin.index', compact('users'));
+        return view('admin.roles', compact('users'));
+    }
+    public function editRoles($id)
+    {
+        $user = User::find($id);
+        $roles = Role::All();
+        return view('admin.editRoles', compact('user', 'roles'));
+    }
+
+    public function createRole(Request $request, $id)
+    {
+        User::find($request->userId)->roles()->attach($id);
+        return redirect()->route('admin.roles.edit', $request->userId);
+    }
+    public function deleteRole(Request $request, $id)
+    {
+
+        User::find($request->userId)->roles()->detach($id);
+        return redirect()->route('admin.roles.edit', $request->userId);
+    }
+    public function destroyUser($id)
+    {
+
+        User::find($id)->delete();
+        return back();
+    }
+    //MAL
+    public function updateRoles(Request $request, $id)
+    {
+        // $roles = User::find($id)->roles->where('pivot.user_id',$id)->delete();
+        $roles = User::find($id)->roles()->delete();
+
+        return User::find($id);
+        //$roles->detach();
+        //Prueba para verificar el funcionamiento de los checkbox
+        /*
+        $response = $request->admin ? true : false;
+        $response2 = $request->editor ? true : false;
+
+        return "UserId: " . $id . "|Admin: " . (string) $response . "|Editor: " . (string) $response2;
+        */
     }
 
     /**

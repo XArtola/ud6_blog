@@ -40,5 +40,17 @@ Route::get('/admin','AdminController@main')->name('admin.main');
 Route::get('/admin/roles','AdminController@roles')->name('admin.roles');
 
 
+Route::post('/admin/roles/{id}/create', 'AdminController@createRole')->name('admin.roles.create');
+Route::get('/admin/roles/{id}/edit','AdminController@editRoles')->name('admin.roles.edit');
+Route::delete('/admin/roles/{id}','AdminController@deleteRole')->name('admin.roles.delete');
+
+Route::delete('/admin/user/{id}','AdminController@destroyUser')->name('admin.user.delete');
+
+//Route::post('/admin/{id}/roles','AdminController@updateRoles')->name('admin.updateRoles');
+
+
+Route::post('/admin/{id}/roles','AdminController@updateRoles')->name('admin.updateRoles');
+
+
 Route::get('/editor','EditorController@index')->name('editor')->middleware('editor');
 

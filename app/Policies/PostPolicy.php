@@ -5,7 +5,7 @@ namespace App\Policies;
 use App\Post;
 use App\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
-
+use Illuminate\Auth\Access\Response;
 class PostPolicy
 {
     use HandlesAuthorization;
@@ -30,7 +30,9 @@ class PostPolicy
      */
     public function view(User $user, Post $post)
     {
-        return $user->id === $post->user_id;
+        return $user->id === $post->user_id
+        ? Response::allow()
+        : Response::deny('No tienes permiso para visualizar este post');
     }
 
     /**
@@ -53,7 +55,9 @@ class PostPolicy
      */
     public function update(User $user, Post $post)
     {
-        //
+        return $user->id === $post->user_id
+        ? Response::allow()
+        : Response::deny('No tienes permiso para actualizar este post');
     }
 
     /**
@@ -65,7 +69,9 @@ class PostPolicy
      */
     public function delete(User $user, Post $post)
     {
-        //
+        return $user->id === $post->user_id
+                ? Response::allow()
+                : Response::deny('No tienes permiso para borrar este post');
     }
 
     /**

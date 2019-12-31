@@ -5,19 +5,19 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Post;
 use App\Category;
-use Auth;
 use Storage;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Auth as FacadesAuth;
 
 class PostController extends Controller
 {
     //Para pedir login
-    /*
+
     public function __construct()
     {
-        $this->middleware('auth');
+        $this->middleware(['auth','role:editor']);
     }
-*/
+
     /**
      * Display a listing of the resource.
      *
@@ -52,6 +52,13 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
+
+        $validatedData = $request->validate([
+            'title' => 'required|unique:posts|max:255',
+            'body' => 'required',
+            'excerpt' => 'required',
+        ]);
+
         $post = new Post();
         $post->title = $request->title;
         $post->excerpt = $request->excerpt;
@@ -65,6 +72,7 @@ class PostController extends Controller
             $post->image = 'img/posts/' . $filename;
         }
         $post->user_id = Auth::user()->id;
+        $post->published_at = now();
         $post->save();
 
         return redirect()->route('posts.index');
@@ -81,7 +89,14 @@ class PostController extends Controller
     public function show($id)
     {
         $post = POST::find($id);
-        return view('posts.show', compact('post'));
+        $user = Auth::user();
+        //He aplicado el policy aqui porque ya no se aplicaba automanticamente
+        if ($user->can('view', $post)) {
+            return view('posts.show', compact('post'));          
+        } else {
+            return view('errors.403');
+        }
+        // return view('posts.show', compact('post'));
     }
 
     /**
@@ -95,7 +110,14 @@ class PostController extends Controller
         $post = Post::find($id);
         $categories = Category::All();
         $btnText = "Actualizar";
-        return view('posts.edit', compact('id', 'post', 'categories', 'btnText'));
+        $user = Auth::user();
+        //He aplicado el policy aqui porque ya no se aplicaba automanticamente
+        if ($user->can('view', $post)) {
+            return view('posts.edit', compact('id', 'post', 'categories', 'btnText'));          
+        } else {
+            return back();
+        }
+        //return view('posts.edit', compact('id', 'post', 'categories', 'btnText'));
     }
 
     /**
@@ -107,6 +129,12 @@ class PostController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $validatedData = $request->validate([
+            'title' => 'required|max:255',
+            'body' => 'required',
+            'excerpt' => 'required',
+        ]);
+
         $post = Post::find($id);
         $post->title = $request->title;
         $post->excerpt = $request->excerpt;
@@ -122,7 +150,7 @@ class PostController extends Controller
 
         $post->user_id = Auth::user()->id;
         $post->update();
-        
+
         return redirect()->route('posts.index');
     }
 
@@ -134,7 +162,14 @@ class PostController extends Controller
      */
     public function destroy($id)
     {
-        Post::find($id)->delete();
-        return back();
+        $user = Auth::user();
+        //He aplicado el policy aqui porque ya no se aplicaba automanticamente
+        if ($user->can('view', $post)) {
+            Post::find($id)->delete();
+            return back();        
+        } else {
+            return back();
+        }
+        //return back();
     }
 }
